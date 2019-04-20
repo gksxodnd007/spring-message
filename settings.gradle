@@ -1,2 +1,4 @@
 rootProject.name = 'message'
 
+include 'common', 'api-gateway', 'producer', 'consumer'
+
