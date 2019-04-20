@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 class CommonApplication
 
 fun main(args: Array<String>) {
-    val application = SpringApplication()
+    val application = SpringApplication(CommonApplication::class.java)
     application.webApplicationType = WebApplicationType.NONE
-    application.run(CommonApplication::javaClass.name, *args)
+    application.run(*args)
 }
