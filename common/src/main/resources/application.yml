@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: default
+
+---
+
+spring:
+  profiles: default
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_message
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 1234

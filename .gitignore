@@ -3,10 +3,10 @@
 *.iws
 *.iml
 *.ipr
-/out/
+*/out/
 
 # build
-/build/
+*/build/
 
 # gradle
 .gradle
