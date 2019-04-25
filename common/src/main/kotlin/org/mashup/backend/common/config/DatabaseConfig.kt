@@ -1,5 +1,6 @@
 package org.mashup.backend.common.config
 
+import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -53,12 +54,13 @@ class DatabaseConfig(val hikariCPProperties: HikariCPProperties) {
         val jpaVendorAdapter = HibernateJpaVendorAdapter()
         entityManagerFactory.jpaVendorAdapter = jpaVendorAdapter
         entityManagerFactory.setJpaProperties(jpaProperties())
+        entityManagerFactory.afterPropertiesSet()
 
         return entityManagerFactory
     }
 
     @Bean
-    fun platformTransactionManager(entityManagerFactory: EntityManagerFactory): PlatformTransactionManager {
+    fun springMessageTransactionManager(entityManagerFactory: EntityManagerFactory): PlatformTransactionManager {
         val jpaTransactionManager = JpaTransactionManager()
         jpaTransactionManager.entityManagerFactory = entityManagerFactory
 
@@ -71,25 +73,23 @@ class DatabaseConfig(val hikariCPProperties: HikariCPProperties) {
     }
 
     private fun datasource(): DataSource {
-        val hikari = HikariDataSource()
-        hikari.jdbcUrl = hikariCPProperties.jdbcUrl
-        hikari.driverClassName = hikariCPProperties.driverClassName
-        hikari.username = hikariCPProperties.username
-        hikari.password = hikariCPProperties.password
-        hikari.connectionTimeout = hikariCPProperties.connectionTimeout.toLong()
-        hikari.idleTimeout = hikariCPProperties.idleTimeout.toLong()
-        hikari.maxLifetime = hikariCPProperties.maxLifetime.toLong()
-        hikari.connectionTestQuery = hikariCPProperties.connectionTestQuery
-        hikari.minimumIdle = hikariCPProperties.minimumIdle.toInt()
-        hikari.maximumPoolSize = hikariCPProperties.maximumPoolSize.toInt()
-        hikari.poolName = hikariCPProperties.poolName
-        hikari.addDataSourceProperty("prepStmtCacheSize", hikariCPProperties.prepStmtCacheSize)
-        hikari.addDataSourceProperty("prepStmtCacheSqlLimit", hikariCPProperties.prepStmtCacheSqlLimit)
-        hikari.addDataSourceProperty("cachePrepStmts", hikariCPProperties.cachePrepStmts)
+        val hikariConfig = HikariConfig()
+        hikariConfig.jdbcUrl = hikariCPProperties.jdbcUrl
+        hikariConfig.driverClassName = hikariCPProperties.driverClassName
+        hikariConfig.username = hikariCPProperties.username
+        hikariConfig.password = hikariCPProperties.password
+        hikariConfig.connectionTimeout = hikariCPProperties.connectionTimeout.toLong()
+        hikariConfig.idleTimeout = hikariCPProperties.idleTimeout.toLong()
+        hikariConfig.maxLifetime = hikariCPProperties.maxLifetime.toLong()
+        hikariConfig.connectionTestQuery = hikariCPProperties.connectionTestQuery
+        hikariConfig.minimumIdle = hikariCPProperties.minimumIdle.toInt()
+        hikariConfig.maximumPoolSize = hikariCPProperties.maximumPoolSize.toInt()
+        hikariConfig.poolName = hikariCPProperties.poolName
+        hikariConfig.addDataSourceProperty("prepStmtCacheSize", hikariCPProperties.prepStmtCacheSize)
+        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", hikariCPProperties.prepStmtCacheSqlLimit)
+        hikariConfig.addDataSourceProperty("cachePrepStmts", hikariCPProperties.cachePrepStmts)
 
-        println(hikariCPProperties.toString())
-
-        return  hikari
+        return  HikariDataSource(hikariConfig)
     }
 
     private fun jpaProperties(): Properties {
