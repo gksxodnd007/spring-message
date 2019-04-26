@@ -26,7 +26,7 @@ class WebMvcConfig : WebMvcConfigurer {
     }
 }
 
-class CustomObjectMapper() : ObjectMapper() {
+class CustomObjectMapper : ObjectMapper() {
 
     init {
         val simpleModule = SimpleModule()
