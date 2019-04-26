@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
@@ -42,6 +43,10 @@ class HikariCPProperties {
     }
 }
 
+@EnableJpaRepositories(
+    basePackages = ["org.mashup.backend.common.domain.repository"],
+    entityManagerFactoryRef = "entityManagerFactory",
+    transactionManagerRef = "springMessageTransactionManager")
 @Configuration
 class DatabaseConfig(val hikariCPProperties: HikariCPProperties) {
 
@@ -49,7 +54,7 @@ class DatabaseConfig(val hikariCPProperties: HikariCPProperties) {
     fun entityManagerFactory(): LocalContainerEntityManagerFactoryBean {
         val entityManagerFactory = LocalContainerEntityManagerFactoryBean()
         entityManagerFactory.dataSource = datasource()
-        entityManagerFactory.setPackagesToScan("org.mashup.backend.common.domain")
+        entityManagerFactory.setPackagesToScan("org.mashup.backend.common.domain.entity")
 
         val jpaVendorAdapter = HibernateJpaVendorAdapter()
         entityManagerFactory.jpaVendorAdapter = jpaVendorAdapter
