@@ -1,15 +1,15 @@
 package org.mashup.backend.consumer.service
 
-import org.springframework.kafka.annotation.KafkaListener
+import org.mashup.backend.common.domain.constant.ChannelType
+import org.mashup.backend.common.domain.dto.LedgerApolloDto
+import org.mashup.backend.common.service.SettlementService
 import org.springframework.stereotype.Service
 
-private const val TOPIC = "shipment"
 
 @Service
-class ConsumeService {
+class ConsumeService(private val settlementService: SettlementService ) {
 
-    @KafkaListener(topics = [TOPIC], groupId = "shipment")
-    fun consumeMessage(message: String) {
-        println(message)
+    fun consumeQuattroTransaction(ledgerApolloDto: LedgerApolloDto) {
+        settlementService.settleTransaction(ledgerApolloDto, ChannelType.QUATTRO)
     }
 }

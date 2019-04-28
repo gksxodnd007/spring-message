@@ -1,0 +1,1 @@
+INSERT INTO `pg_fee_rule` VALUES (1, "TEST_CID", 0.022)

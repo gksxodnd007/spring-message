@@ -1,4 +1,4 @@
-package org.mashup.backend.producer.config
+package org.mashup.backend.consumer.config
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser

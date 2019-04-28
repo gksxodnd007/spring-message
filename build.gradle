@@ -105,6 +105,7 @@ project(":consumer") {
     dependencies {
         implementation project(":common")
         implementation "org.springframework.kafka:spring-kafka:2.2.2.RELEASE"
+        implementation "org.springframework.boot:spring-boot-starter-web"
         implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
     }
 }
