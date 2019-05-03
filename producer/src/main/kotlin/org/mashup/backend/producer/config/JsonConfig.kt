@@ -21,7 +21,7 @@ class JsonConfig {
     fun objectMapper(): ObjectMapper {
         return Jackson2ObjectMapperBuilder.json()
             .serializersByType(mapOf(LocalDate::class.java to LocalDateSerializer(), LocalDateTime::class.java to LocalDateTimeSerializer()))
-            .deserializersByType(mapOf(LocalDate::class.java to LocalDateDesrializer(), LocalDateTime::class.java to LocalDateTimeDeserializer()))
+            .deserializersByType(mapOf(LocalDate::class.java to LocalDateDeserializer(), LocalDateTime::class.java to LocalDateTimeDeserializer()))
             .modules(listOf(KotlinModule(), JavaTimeModule()))
             .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
@@ -35,7 +35,7 @@ class JsonConfig {
         }
     }
 
-    private inner class LocalDateDesrializer : JsonDeserializer<LocalDate>() {
+    private inner class LocalDateDeserializer : JsonDeserializer<LocalDate>() {
 
         override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): LocalDate {
             return LocalDate.parse(p!!.valueAsString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
