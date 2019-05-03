@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service
 private const val TOPIC = "voyager-apollo"
 
 @Service
-class ProduceService(private val kafkaTemplate: KafkaTemplate<out Any, out Any>, private val objectMapper: ObjectMapper) {
+class ProduceService(private val kafkaTemplate: KafkaTemplate<String, String>, private val objectMapper: ObjectMapper) {
 
     fun produceSettlementTarget(payload: LedgerApolloDto, channelType: ChannelType) {
-        (kafkaTemplate as KafkaTemplate<String, String>).send(TOPIC, objectMapper.writeValueAsString(payload))
+        kafkaTemplate.send(TOPIC, objectMapper.writeValueAsString(payload))
     }
 }
