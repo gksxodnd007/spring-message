@@ -15,7 +15,8 @@ class SettlementService(private val settlementBaseRepository: SettlementBaseRepo
 
     fun settleTransaction(ledger: LedgerApolloDto, channelType: ChannelType) {
         if (ledger.paymentStatus == PaymentStatus.VOID.name) {
-            TODO("망취소일 경우 필요한 로직")
+//            TODO("망취소일 경우 필요한 로직")
+            return
         }
 
         val settlementBase = SettlementBase().apply {

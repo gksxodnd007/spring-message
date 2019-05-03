@@ -41,7 +41,7 @@ vi /usr/local/etc/kafka/server.properties
 
 and then eliminate comment this server settings and update the value from
 ```
-listeners=PLAINTEXT://:9092
+listeners=PLAINTEXT://localhost:9092
 ```
 
 #### Test Consume using CLI
